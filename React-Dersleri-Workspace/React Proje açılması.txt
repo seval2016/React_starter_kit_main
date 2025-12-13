@@ -1,0 +1,11 @@
+React Proje açılması
+
+1.Adım : Klasörün içerisine gir
+2.Adım : npm create vite@leatest
+3.Adım : Projeyi isimlendir
+4.Adım : React seçenediğini seç
+5.Adım : Javascript seçenediğini seç
+4.Adım : cd Pproje_adı
+4.Adım : npm install
+4.Adım : npm run dev
+

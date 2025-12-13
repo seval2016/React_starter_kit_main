@@ -1,0 +1,21 @@
+* UseState Hooks :  diğer dillerdeki değişken tanımlamanın react daki karşılığı usestate kullanmaktır.
+
+JAVA:
+String tckn= "12345678910";
+String firstName= "Enes";
+
+React:
+ const [firstName, setfirstName] = useState("seval");
+  const [lastName, setlastName] = useState(" Şentürk");
+  const [names, setnames] = useState(["ali", "veli", "ayşe", "fatma", "seval"]); //array
+  const [info, setInfo] = useState({
+    name: "seval",
+    lastName: "şentürk",
+    age: 20,
+    isMarried: true,
+  }); //object
+
+  Önemli Not: bir state değeri set ile değiştirildiğinde component yeniden render ediliyor. Bu yogun dinamik kodlarda sorun çıkarır projeyi yavaşlatır. 
+
+
+* UseEffect Hooks : Belirli şartlara göre belirli aksiyonlar alındığında useEffect kullanılır.  
