@@ -1,0 +1,75 @@
+/* ===== HEADER ===== */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 24px;
+  height: 64px;
+
+  background-color: #ffffff;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.logo {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1677ff;
+}
+
+.menu {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+/* ===== RIGHT ACTIONS ===== */
+.right-actions {
+  display: flex;
+  align-items: center;
+}
+
+.user-area {
+  cursor: pointer;
+  padding: 6px 10px;
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.user-area:hover {
+  background-color: #f5f5f5;
+}
+
+.username {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+}
+
+
+/* ===== FOOTER ===== */
+.footer {
+   padding: 16px 24px;
+
+  background-color: #fafafa;
+  border-top: 1px solid #f0f0f0;
+
+  text-align: center;
+  font-size: 14px;
+  color: #8c8c8c;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .header {
+    padding: 0 16px;
+  }
+
+  .header .menu {
+    display: none; /* mobilde menüyü gizle */
+  }
+
+  .header .logo {
+    font-size: 18px;
+  }
+}
