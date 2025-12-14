@@ -1,3 +1,9 @@
+
+:root {
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
 html, body, #root {
   height: 100%;
   margin: 0;
@@ -11,4 +17,47 @@ html, body, #root {
 
 .main-content {
   flex: 1;
+}
+
+
+.container {
+  width: 100%;
+  margin: 32px auto;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+/* Small devices */
+@media (min-width: 576px) {
+  .container {
+    max-width: 540px;
+  }
+}
+
+/* Medium devices */
+@media (min-width: 768px) {
+  .container {
+    max-width: 720px;
+  }
+}
+
+/* Large devices */
+@media (min-width: 992px) {
+  .container {
+    max-width: 960px;
+  }
+}
+
+/* Extra large */
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1140px;
+  }
+}
+
+/* 2XL */
+@media (min-width: 1400px) {
+  .container {
+    max-width: 1320px;
+  }
 }

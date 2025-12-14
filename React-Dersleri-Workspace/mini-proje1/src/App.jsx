@@ -1,13 +1,19 @@
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
+import Course from "./components/cards/Course";
+import courses from "./data/coursesData";
 
 function App() {
   return (
-    <div className="app-layout">
+    <div className="layout">
       <Header />
 
       <main className="main-content">
-        {/* içerik */}
+        <div className="container course-grid">
+          {courses.map((course) => (
+            <Course key={course.id} course={course} />
+          ))}
+        </div>
       </main>
 
       <Footer />
