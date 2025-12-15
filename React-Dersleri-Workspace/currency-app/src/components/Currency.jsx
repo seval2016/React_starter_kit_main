@@ -10,17 +10,13 @@ import {
   Divider
 } from "@mui/material";
 import SwapHorizIcon from "@mui/icons-material/SwapHoriz";
+import axios  from 'axios';
 
 let BASE_URL="https://api.freecurrencyapi.com/v1/latest";
 let API_KEY="fca_live_9FoOsIoQ9zObJKTQZ0TZWSjDr0Ue5z1ngvtALN33";
 
 
-const rates = {
-  TRY: 1,
-  USD: 32,
-  EUR: 35,
-  GBP: 41
-};
+
 
 const currencies = [
   { code: "TRY", label: "Türk Lirası" },
@@ -31,18 +27,28 @@ const currencies = [
 
 function Currency() {
   const [amount, setAmount] = useState("");
-  const [from, setFrom] = useState("TRY");
-  const [to, setTo] = useState("USD");
+  const [from, setFrom] = useState("USD");
+  const [to, setTo] = useState("TRY");
   const [result, setResult] = useState(null);
 
-  const handleConvert = () => {
-    if (!amount) return;
 
-    const converted =
-      (amount * rates[from]) / rates[to];
+  const handleConvert = async () => {
+  if (!amount) return;
+
+  try {
+    const response = await axios.get(
+      `${BASE_URL}?apikey=${API_KEY}&base_currency=${from}`
+    );
+
+    const rate = response.data.data[to];
+    const converted = amount * rate;
 
     setResult(converted.toFixed(2));
-  };
+  } catch (error) {
+    console.error("Çevirme hatası", error);
+  }
+};
+
 
   const handleSwap = () => {
     setFrom(to);
