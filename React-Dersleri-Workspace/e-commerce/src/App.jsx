@@ -1,14 +1,15 @@
-import { useState } from 'react'
-import './App.css'
-import PageContainer from './container/PageContainer';
-import Header from './components/Header';
-
+import { ThemeProviderCustom } from "./context/ThemeContext";
+import Header from "./components/Header";
+import PageContainer from "./container/PageContainer";
 
 function App() {
   return (
-     <PageContainer>
+    <ThemeProviderCustom>
       <Header />
-     </PageContainer>
+      <PageContainer>
+        {/* içerik */}
+      </PageContainer>
+    </ThemeProviderCustom>
   );
 }
 
