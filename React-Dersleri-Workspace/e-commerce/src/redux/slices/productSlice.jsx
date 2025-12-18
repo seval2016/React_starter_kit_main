@@ -15,22 +15,45 @@ export const getAllProducts = createAsyncThunk("products/getAllProducts", async 
   return response.data;
 });
 
+export const getProductById = createAsyncThunk(
+  "products/getProductById",
+  async (id) => {
+    const res = await axios.get(`${BASE_URL}/products/${id}`);
+    return res.data;
+  }
+);
+
+
 export const productSlice = createSlice({
   name: "product",
   initialState,
-  reducers: {},
-  extraReducers: (builder) => {
-    builder.addCase(getAllProducts.pending, (state) => {
-      state.loading = true
-    })
-    builder.addCase(getAllProducts.fulfilled, (state, action) => {
-      state.loading = false
-      state.products = action.payload
-      
-    })
+  reducers: {
+    setSelectedProduct: (state, action) => {
+      state.selectedProduct = action.payload
+
+    }
+
   },
+ extraReducers: (builder) => {
+  builder
+    .addCase(getAllProducts.pending, (state) => {
+      state.loading = true;
+    })
+    .addCase(getAllProducts.fulfilled, (state, action) => {
+      state.loading = false;
+      state.products = action.payload;
+    })
+    .addCase(getProductById.pending, (state) => {
+      state.loading = true;
+    })
+    .addCase(getProductById.fulfilled, (state, action) => {
+      state.loading = false;
+      state.selectedProduct = action.payload;
+    });
+}
+,
 });
 
-export const {} = productSlice.actions;
+export const {setSelectedProduct} = productSlice.actions;
 
 export default productSlice.reducer;
