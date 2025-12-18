@@ -1,14 +1,14 @@
 import { ThemeProviderCustom } from "./context/ThemeContext";
 import Header from "./components/Header";
-import PageContainer from "./container/PageContainer";
+import RouterConfig from "./config/RouterConfig";
+import Loading from "./components/Loading";
 
 function App() {
   return (
     <ThemeProviderCustom>
       <Header />
-      <PageContainer>
-        {/* içerik */}
-      </PageContainer>
+      <RouterConfig />
+      <Loading />
     </ThemeProviderCustom>
   );
 }
