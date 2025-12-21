@@ -143,7 +143,7 @@ function Basket({ onClose }) {
 
                   {/* PRICE */}
                   <Typography fontSize={13} color="text.secondary">
-                    ${item.price}
+                    {item.price}₺
                   </Typography>
 
                   {/* QUANTITY */}
@@ -214,7 +214,7 @@ function Basket({ onClose }) {
             }}
           >
             <Typography fontWeight={600}>Toplam</Typography>
-            <Typography fontWeight={700}>${totalPrice.toFixed(2)}</Typography>
+            <Typography fontWeight={700}>{totalPrice.toFixed(2)}₺</Typography>
           </Box>
 
           <Button

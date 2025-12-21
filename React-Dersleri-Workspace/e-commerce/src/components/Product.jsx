@@ -1,4 +1,3 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Card,
@@ -10,11 +9,14 @@ import {
   Rating,
   Button,
 } from "@mui/material";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+
+import useAddToBasket from "../hooks/useAddToBasket";
 
 export default function Product({ product }) {
-  const { id,title, description, price, rating, category, image } = product;
   const navigate = useNavigate();
+  const addToBasket = useAddToBasket();
+
+  const { id, title, description, price, rating, category, image } = product;
 
   return (
     <Card
@@ -37,7 +39,7 @@ export default function Product({ product }) {
       />
 
       <CardContent sx={{ flexGrow: 1 }}>
-        <Typography variant="h6" gutterBottom noWrap>
+        <Typography variant="h6" noWrap>
           {title}
         </Typography>
 
@@ -64,18 +66,28 @@ export default function Product({ product }) {
         </Box>
 
         <Typography variant="h6" color="primary" fontWeight="bold">
-          ${price}
+          {price}₺
         </Typography>
 
-        <Button
-          onClick={() => navigate(`/product-details/${id}`)}
-          fullWidth
-          endIcon={<ArrowForwardIcon />}
-          variant="outlined"
-          size="medium"
-        >
-          Detayına Git
-        </Button>
+        <Box sx={{ display: "flex", gap: 1, mt: 2 }}>
+          <Button
+            fullWidth
+            variant="contained"
+            size="small"
+            onClick={() => addToBasket(product)}
+          >
+            Sepete Ekle
+          </Button>
+
+          <Button
+            fullWidth
+            variant="outlined"
+            size="small"
+            onClick={() => navigate(`/product-details/${id}`)}
+          >
+            Detay
+          </Button>
+        </Box>
       </CardContent>
     </Card>
   );

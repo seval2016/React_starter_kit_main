@@ -24,15 +24,15 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
 import { addToBasket } from "../redux/slices/basketSlice";
 import { toast } from "react-toastify";
+import useAddToBasket from "../hooks/useAddToBasket";
 
 export default function ProductDetail() {
   const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const { products, selectedProduct } = useSelector(
-    (state) => state.product
-  );
+  const addToBasket = useAddToBasket();
+  
+  const { products, selectedProduct } = useSelector((state) => state.product);
 
   const [count, setCount] = useState(1);
 
@@ -47,24 +47,7 @@ export default function ProductDetail() {
   };
 
   const addBasket = () => {
-    const payload = {
-      id: Number(id),
-      price: selectedProduct.price,
-      image: selectedProduct.image,
-      title: selectedProduct.title,
-      category: selectedProduct.category,
-      rating: selectedProduct.rating,
-      description: selectedProduct.description,
-      quantity: count,
-    };
-
-    dispatch(addToBasket(payload));
-
-    toast.success("Ürün sepete eklendi 🛒", {
-      position: "top-right",
-      autoClose: 2000,
-    });
-
+    addToBasket(selectedProduct, count);
     setCount(1);
   };
 
@@ -143,7 +126,7 @@ export default function ProductDetail() {
           )}
 
           <Typography variant="h3" color="primary" mb={2}>
-            ${selectedProduct.price}
+            {selectedProduct.price}₺
           </Typography>
 
           <Typography color="text.secondary" mb={3}>
@@ -158,9 +141,7 @@ export default function ProductDetail() {
               <RemoveIcon />
             </IconButton>
 
-            <Typography sx={{ mx: 2, fontWeight: "bold" }}>
-              {count}
-            </Typography>
+            <Typography sx={{ mx: 2, fontWeight: "bold" }}>{count}</Typography>
 
             <IconButton onClick={increment}>
               <AddIcon />
