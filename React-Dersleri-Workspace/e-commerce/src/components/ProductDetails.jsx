@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { setSelectedProduct, getProductById } from "../redux/slices/productSlice";
+import {
+  setSelectedProduct,
+  getProductById,
+} from "../redux/slices/productSlice";
 
 import {
   Container,
@@ -13,10 +16,13 @@ import {
   Divider,
   IconButton,
 } from "@mui/material";
+
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+
+import { addToBasket } from "../redux/slices/basketSlice";
 
 export default function ProductDetail() {
   const { id } = useParams();
@@ -39,23 +45,40 @@ export default function ProductDetail() {
     }
   };
 
+  const addBasket = () => {
+    const payload = {
+      id: Number(id),
+      price: selectedProduct.price,
+      image: selectedProduct.image,
+      title: selectedProduct.title,
+      category: selectedProduct.category,
+      rating: selectedProduct.rating,
+      description: selectedProduct.description,
+      quantity: count,
+    };
+
+    dispatch(addToBasket(payload));
+    setCount(1);
+  };
+
   useEffect(() => {
     if (products.length > 0) {
       const foundProduct = products.find(
         (product) => product.id === Number(id)
       );
+
       if (foundProduct) {
         dispatch(setSelectedProduct(foundProduct));
+        return;
       }
-    } else {
-      dispatch(getProductById(id));
     }
-  }, [products, id, dispatch]);
 
+    dispatch(getProductById(id));
+  }, [products, id, dispatch]);
 
   if (!selectedProduct || Object.keys(selectedProduct).length === 0) {
     return (
-      <Container maxWidth="lg" sx={{ mt: 4, display: 'flex', justifyContent: 'center' }}>
+      <Container sx={{ mt: 4, textAlign: "center" }}>
         <Typography variant="h6">Ürün bulunamadı</Typography>
       </Container>
     );
@@ -65,180 +88,101 @@ export default function ProductDetail() {
     <Container maxWidth="lg" sx={{ mt: 4, mb: 8 }}>
       <Box
         sx={{
-          display: 'flex',
-          flexDirection: { xs: 'column', md: 'row' },
-          gap: { xs: 4, md: 8 },
-          alignItems: 'flex-start'
+          display: "flex",
+          flexDirection: { xs: "column", md: "row" },
+          gap: 6,
         }}
       >
-
-        {/* IMAGE SECTION - LEFT */}
+        {/* IMAGE */}
         <Box
           sx={{
             flex: 1,
-            width: '100%',
-            display: 'flex',
-            justifyContent: 'center',
-            bgcolor: '#fff',
+            display: "flex",
+            justifyContent: "center",
             p: 2,
-            borderRadius: 4,
-            boxShadow: '0 4px 20px rgba(0,0,0,0.08)'
+            bgcolor: "#fff",
+            borderRadius: 3,
+            boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
           }}
         >
           <Box
             component="img"
             src={selectedProduct.image}
             alt={selectedProduct.title}
-            sx={{
-              width: "100%",
-              maxWidth: 400,
-              maxHeight: 500,
-              objectFit: "contain",
-            }}
+            sx={{ maxWidth: 400, objectFit: "contain" }}
           />
         </Box>
 
-        {/* INFO SECTION - RIGHT */}
-        <Box sx={{ flex: 1, width: '100%' }}>
-          <Typography
-            variant="h4"
-            fontWeight="700"
-            sx={{
-              fontSize: { xs: '1.5rem', md: '2.25rem' },
-              lineHeight: 1.2,
-              mb: 2
-            }}
-          >
+        {/* INFO */}
+        <Box sx={{ flex: 1 }}>
+          <Typography variant="h4" fontWeight="700" mb={2}>
             {selectedProduct.title}
           </Typography>
 
-          <Box sx={{ display: "flex", alignItems: "center", mb: 3, flexWrap: "wrap", gap: 1 }}>
-            <Chip
-              label={selectedProduct.category}
-              sx={{ fontWeight: 600, textTransform: 'uppercase', fontSize: '0.75rem' }}
-            />
-            {selectedProduct.rating && (
-              <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <Rating
-                  value={selectedProduct.rating.rate}
-                  precision={0.5}
-                  readOnly
-                  size="small"
-                />
-                <Typography variant="body2" sx={{ ml: 0.5, color: 'text.secondary' }}>
-                  ({selectedProduct.rating.count} değerlendirme)
-                </Typography>
-              </Box>
-            )}
-          </Box>
+          <Chip label={selectedProduct.category} sx={{ mb: 2 }} />
 
-          <Typography
-            variant="h3"
-            color="primary"
-            fontWeight="bold"
-            sx={{ mb: 3, fontSize: { xs: '2rem', md: '2.5rem' } }}
-          >
+          {selectedProduct.rating && (
+            <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
+              <Rating
+                value={selectedProduct.rating.rate}
+                readOnly
+                precision={0.5}
+                size="small"
+              />
+              <Typography sx={{ ml: 1 }}>
+                ({selectedProduct.rating.count})
+              </Typography>
+            </Box>
+          )}
+
+          <Typography variant="h3" color="primary" mb={2}>
             ${selectedProduct.price}
           </Typography>
 
-          <Typography
-            variant="body1"
-            color="text.secondary"
-            sx={{
-              fontSize: { xs: '1rem', md: '1.1rem' },
-              lineHeight: 1.8,
-              mb: 4,
-            }}
-          >
+          <Typography color="text.secondary" mb={3}>
             {selectedProduct.description}
           </Typography>
 
-          <Divider sx={{ mb: 4 }} />
+          <Divider sx={{ mb: 3 }} />
 
-          <Box sx={{ display: "flex", alignItems: "center", gap: 3, mb: 4 }}>
-            <Typography variant="h6" fontWeight="500" sx={{ fontSize: '1.1rem' }}>Adet:</Typography>
-            <Box
-              sx={{
-                display: 'flex',
-                alignItems: 'center',
-                border: '1px solid',
-                borderColor: 'divider',
-                borderRadius: 2,
-                px: 1,
-                py: 0.5
-              }}
-            >
-              <IconButton
-                onClick={decrement}
-                size="small"
-                sx={{ color: 'text.secondary' }}
-              >
-                <RemoveIcon fontSize="small" />
-              </IconButton>
-              <Typography
-                variant="h6"
-                sx={{
-                  mx: 2,
-                  fontWeight: 'bold',
-                  minWidth: 24,
-                  textAlign: 'center'
-                }}
-              >
-                {count}
-              </Typography>
-              <IconButton
-                onClick={increment}
-                size="small"
-                sx={{ color: 'text.secondary' }}
-              >
-                <AddIcon fontSize="small" />
-              </IconButton>
-            </Box>
+          {/* QUANTITY */}
+          <Box sx={{ display: "flex", alignItems: "center", mb: 3 }}>
+            <IconButton onClick={decrement}>
+              <RemoveIcon />
+            </IconButton>
+
+            <Typography sx={{ mx: 2, fontWeight: "bold" }}>
+              {count}
+            </Typography>
+
+            <IconButton onClick={increment}>
+              <AddIcon />
+            </IconButton>
           </Box>
 
-          <Box sx={{ display: "flex", gap: 2, flexDirection: { xs: 'column', sm: 'row' } }}>
+          {/* BUTTONS */}
+          <Box sx={{ display: "flex", gap: 2 }}>
             <Button
               variant="contained"
               size="large"
-              sx={{
-                flex: 1,
-                py: 1.5,
-                fontSize: '1rem',
-                textTransform: 'none',
-                borderRadius: 2
-              }}
+              onClick={addBasket}
+              sx={{ flex: 1 }}
             >
               Sepete Ekle
             </Button>
-            <IconButton
-              size="large"
-              sx={{
-                border: '1px solid',
-                borderColor: 'divider',
-                borderRadius: 2,
-                color: 'text.secondary',
-                width: { xs: '100%', sm: 'auto' } // Full width on mobile if needed, or just regular
-              }}
-            >
-              <FavoriteBorderIcon />
-            </IconButton>
+
             <Button
               variant="outlined"
-              size="large"
               startIcon={<ArrowBackIcon />}
               onClick={() => navigate(-1)}
-              sx={{
-                flex: 1,
-                py: 1.5,
-                fontSize: '1rem',
-                textTransform: 'none',
-                borderRadius: 2,
-                borderColor: 'divider',
-                color: 'text.primary'
-              }}
+              sx={{ flex: 1 }}
             >
               Geri Dön
             </Button>
+
+            <IconButton>
+              <FavoriteBorderIcon />
+            </IconButton>
           </Box>
         </Box>
       </Box>

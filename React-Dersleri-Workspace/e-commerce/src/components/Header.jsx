@@ -43,7 +43,6 @@ function Header() {
     >
       <Container maxWidth="xl">
         <Toolbar disableGutters sx={{ justifyContent: "space-between" }}>
-          
           {/* SOL - LOGO & MENU ICON */}
           <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
             {isMobile && (
@@ -88,7 +87,6 @@ function Header() {
 
           {/* SAĞ - ACTIONS */}
           <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-            
             {/* THEME TOGGLE */}
             <IconButton onClick={toggleTheme}>
               {isDark ? <LightModeIcon /> : <DarkModeIcon />}
@@ -108,8 +106,8 @@ function Header() {
                 badgeContent={3}
                 sx={{
                   "& .MuiBadge-badge": {
-                    backgroundColor: "#B3D838",
-                    color: "#555",
+                    backgroundColor: "#80a019ff",
+                    color: "#fff",
                   },
                 }}
               >
