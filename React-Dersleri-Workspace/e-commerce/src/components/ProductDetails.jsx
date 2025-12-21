@@ -23,6 +23,7 @@ import RemoveIcon from "@mui/icons-material/Remove";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
 import { addToBasket } from "../redux/slices/basketSlice";
+import { toast } from "react-toastify";
 
 export default function ProductDetail() {
   const { id } = useParams();
@@ -58,6 +59,12 @@ export default function ProductDetail() {
     };
 
     dispatch(addToBasket(payload));
+
+    toast.success("Ürün sepete eklendi 🛒", {
+      position: "top-right",
+      autoClose: 2000,
+    });
+
     setCount(1);
   };
 
