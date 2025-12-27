@@ -53,7 +53,7 @@ function TodoCreate() {
           variant="contained"
           onClick={handleCreateTodo}
           sx={{ minWidth: 160 }}
-        ></Button>
+        >Ekle</Button>
       </Stack>
 
       <TodoList />

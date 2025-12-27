@@ -1,0 +1,14 @@
+
+react           : npm create vite@latest
+materialUI      : npm install @mui/material @emotion/react @emotion/styled
+reduxjs/toolkit : npm install @reduxjs/toolkit
+react-redux     : npm install react-redux
+react-icons     : npm install react-icons
+json server     : npm install -g json-server (backend tarafı olmadıgı için hayalı kullanıcılar oluşturmak için kullanıyoruz)
+axios           : npm i axios
+formik          : npm i formik
+yup             : npm i yup
+react-router-dom: npm i react-router-dom
+react tostify   : npm i react-toastify
+
+

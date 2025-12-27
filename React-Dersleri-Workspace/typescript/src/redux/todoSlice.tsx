@@ -1,30 +1,32 @@
-import { createSlice} from '@reduxjs/toolkit';
-import type { PayloadAction } from '@reduxjs/toolkit';
-import type { TodoInitialState, TodoType } from '../types/Types';
+import { createSlice } from "@reduxjs/toolkit";
+import type { PayloadAction } from "@reduxjs/toolkit";
+import type { TodoInitialState, TodoType } from "../types/Types";
 
-
-const initialState : TodoInitialState ={
-todos: [],
-}
-
+const initialState: TodoInitialState = {
+  todos: [],
+};
 
 const todoSlice = createSlice({
-  name: 'todo',
+  name: "todo",
   initialState,
   reducers: {
-    createTodo: (state: TodoInitialState, action: PayloadAction<TodoType>) => {
-      state.todos = [...state.todos, action.payload];
+    createTodo: (state, action: PayloadAction<TodoType>) => {
+      state.todos.push(action.payload);
     },
 
-    toggleTodo: (state, action: PayloadAction<string>) => {
-      const todo = state.todos.find((t) => t.id === action.payload);
-      if (todo) {
-        todo.completed = !todo.completed;
+    removeTodoById: (state, action: PayloadAction<number>) => {
+      state.todos = state.todos.filter(
+        (todo) => todo.id !== action.payload
+      );
+    },
+
+    editTodoById: (state, action: PayloadAction<TodoType>) => {
+      const index = state.todos.findIndex(
+        (todo) => todo.id === action.payload.id
+      );
+      if (index !== -1) {
+        state.todos[index] = action.payload;
       }
-    },
-
-    deleteTodo: (state, action: PayloadAction<string>) => {
-      state.todos = state.todos.filter((t) => t.id !== action.payload);
     },
 
     clearCompleted: (state) => {
@@ -34,9 +36,9 @@ const todoSlice = createSlice({
 });
 
 export const {
- createTodo,
-  toggleTodo,
-  deleteTodo,
+  createTodo,
+  editTodoById,
+  removeTodoById,
   clearCompleted,
 } = todoSlice.actions;
 
