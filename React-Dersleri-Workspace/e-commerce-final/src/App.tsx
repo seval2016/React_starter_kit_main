@@ -1,12 +1,12 @@
-import './App.css'
+import "./App.css";
+import RouterConfig from "./config/RouterConfig";
 
 function App() {
-
   return (
     <>
-     Test
+      <RouterConfig />
     </>
-  )
+  );
 }
 
-export default App
+export default App;

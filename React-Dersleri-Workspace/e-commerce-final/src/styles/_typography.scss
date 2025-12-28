@@ -1,0 +1,20 @@
+@import "./variables";
+
+/* HEADINGS */
+.typography-h5 {
+  font-size: 1.5rem;     // 24px
+  line-height: 1.334;
+  font-weight: 700;
+}
+
+/* BODY */
+.typography-body2 {
+  font-size: 0.875rem;   // 14px
+  line-height: 1.43;
+  color: $text-secondary;
+}
+
+/* CENTERED TEXT */
+.text-center {
+  text-align: center;
+}

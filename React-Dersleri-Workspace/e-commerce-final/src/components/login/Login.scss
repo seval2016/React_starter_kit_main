@@ -1,0 +1,58 @@
+@import "../../styles/variables";
+@import "../../styles/mixins";
+@import "../../styles/typography";
+
+.login {
+  min-height: 100vh;
+  background: $primary-gradient;
+  padding: $space-md;
+
+  @include flex-center;
+
+  &__card {
+    width: 380px;
+    border-radius: $radius-lg;
+    box-shadow: $box-shadow;
+
+    @include mobile {
+      width: 100%;
+      max-width: 340px;
+    }
+  }
+
+  &__content {
+    padding: $space-xl;
+  }
+
+  &__title {
+    @extend .typography-h5;
+    text-align: center;
+    margin-bottom: 0.35em;
+  }
+
+  &__subtitle {
+    @extend .typography-body2;
+    text-align: center;
+    margin-bottom: $space-lg;
+  }
+
+  &__button {
+    margin-top: $space-lg;
+    padding: $space-md;
+    font-weight: 700;
+    text-transform: none;
+    border-radius: $radius-md;
+    background: $primary-gradient;
+  }
+
+  &__forgot {
+    @extend .typography-body2;
+    text-align: center;
+    margin-top: $space-md;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

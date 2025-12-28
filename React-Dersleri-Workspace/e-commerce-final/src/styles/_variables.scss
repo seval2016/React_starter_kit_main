@@ -1,0 +1,31 @@
+/* COLORS */
+$primary: #667eea;
+$secondary: #764ba2;
+$primary-gradient: linear-gradient(135deg, $primary, $secondary);
+
+$text-primary: rgba(0, 0, 0, 0.87);
+$text-secondary: rgba(0, 0, 0, 0.6);
+
+/* DARK MODE */
+$text-primary-dark: rgba(255, 255, 255, 0.87);
+$text-secondary-dark: rgba(255, 255, 255, 0.7);
+
+/* SPACING (MUI 8px grid uyumlu) */
+$space-xs: 4px;
+$space-sm: 8px;
+$space-md: 16px;
+$space-lg: 24px;
+$space-xl: 32px;
+
+/* BORDER RADIUS */
+$radius-sm: 8px;
+$radius-md: 12px;
+$radius-lg: 16px;
+
+/* SHADOW */
+$box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+
+/* BREAKPOINTS */
+$mobile: 480px;
+$tablet: 768px;
+$desktop: 1024px;
