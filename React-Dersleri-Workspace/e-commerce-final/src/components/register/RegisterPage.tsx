@@ -6,6 +6,7 @@ import {
   TextField,
   Typography,
   InputAdornment,
+  CircularProgress,
 } from "@mui/material";
 
 import PersonIcon from "@mui/icons-material/Person";
@@ -15,138 +16,171 @@ import LockIcon from "@mui/icons-material/Lock";
 import "./Register.scss";
 import { useFormik } from "formik";
 import { registerSchema } from "../../validations/RegisterPageSchema";
+import RegisterPageService from "../../services/RegisterPageService";
+import { showSuccess, showError } from "../../utils/toast";
+import type { UserType } from "../../types/Types";
 
 const Register = () => {
-  const { values, handleSubmit, handleChange, errors, resetForm } = useFormik({
+  const formik = useFormik<UserType>({
     initialValues: {
       userName: "",
       email: "",
       password: "",
       confirmPassword: "",
     },
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
-    },
     validationSchema: registerSchema,
+    onSubmit: async (values, actions) => {
+      try {
+        await RegisterPageService.register(values);
+
+        showSuccess("Kayıt başarılı 🎉");
+        actions.resetForm();
+      } catch (error: any) {
+        showError(
+          error?.response?.data?.message || "Bir hata oluştu ❌"
+        );
+      } finally {
+        actions.setSubmitting(false);
+      }
+    },
   });
 
-  //console.log(formik.values);
-
-  const clear = () => {
-    resetForm();
-  };
+  const {
+    values,
+    handleSubmit,
+    handleChange,
+    errors,
+    touched,
+    isSubmitting,
+    resetForm,
+  } = formik;
 
   return (
     <Box className="register">
       <Card className="register__card">
         <CardContent className="register__content">
-          <Typography className="register__title">Create Account ✨</Typography>
+          <Typography className="register__title">
+            Create Account ✨
+          </Typography>
 
           <Typography className="register__subtitle">
             Sign up to get started
           </Typography>
 
-          <TextField
-            fullWidth
-            label="Username"
-            margin="normal"
-            id="username"
-            value={values.userName}
-            onChange={handleChange}
-            slotProps={{
-              input: {
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <PersonIcon />
-                  </InputAdornment>
-                ),
-              },
-            }}
-            error={errors.userName ? true : false}
-            helperText={errors.userName}
-          />
-
-          <TextField
-            fullWidth
-            label="Email"
-            margin="normal"
-            id="email"
-            value={values.email}
-            onChange={handleChange}
-            slotProps={{
-              input: {
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <EmailIcon />
-                  </InputAdornment>
-                ),
-              },
-            }}
-            error={errors.email ? true : false}
-            helperText={errors.email}
-          />
-
-          <TextField
-            fullWidth
-            label="Password"
-            type="password"
-            margin="normal"
-            id="password"
-            value={values.password}
-            onChange={handleChange}
-            slotProps={{
-              input: {
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <LockIcon />
-                  </InputAdornment>
-                ),
-              },
-            }}
-            error={errors.password ? true : false}
-            helperText={errors.password}
-          />
-
-          <TextField
-            fullWidth
-            label="Confirm Password"
-            type="password"
-            margin="normal"
-            id="confirmPassword"
-            value={values.password}
-            onChange={handleChange}
-            slotProps={{
-              input: {
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <LockIcon />
-                  </InputAdornment>
-                ),
-              },
-            }}
-            error={errors.confirmPassword ? true : false}
-            helperText={errors.confirmPassword}
-          />
-          <Box className="register__buttons">
-            <Button
+          <form onSubmit={handleSubmit} noValidate>
+            <TextField
               fullWidth
-              variant="outlined"
-              className="register__button"
-              type="button"
-              onClick={clear}
-            >
-              Clear
-            </Button>
+              label="Username"
+              id="userName"
+              value={values.userName}
+              onChange={handleChange}
+              margin="normal"
+              slotProps={{
+                input: {
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <PersonIcon />
+                    </InputAdornment>
+                  ),
+                },
+              }}
+              error={Boolean(touched.userName && errors.userName)}
+              helperText={touched.userName && errors.userName}
+            />
 
-            <Button
+            <TextField
               fullWidth
-              variant="contained"
-              className="register__button"
-              type="submit"
-            >
-              Register
-            </Button>
-          </Box>
+              label="Email"
+              id="email"
+              value={values.email}
+              onChange={handleChange}
+              margin="normal"
+              slotProps={{
+                input: {
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <EmailIcon />
+                    </InputAdornment>
+                  ),
+                },
+              }}
+              error={Boolean(touched.email && errors.email)}
+              helperText={touched.email && errors.email}
+            />
+
+            <TextField
+              fullWidth
+              label="Password"
+              type="password"
+              id="password"
+              value={values.password}
+              onChange={handleChange}
+              margin="normal"
+              slotProps={{
+                input: {
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <LockIcon />
+                    </InputAdornment>
+                  ),
+                },
+              }}
+              error={Boolean(touched.password && errors.password)}
+              helperText={touched.password && errors.password}
+            />
+
+            <TextField
+              fullWidth
+              label="Confirm Password"
+              type="password"
+              id="confirmPassword"
+              value={values.confirmPassword}
+              onChange={handleChange}
+              margin="normal"
+              slotProps={{
+                input: {
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <LockIcon />
+                    </InputAdornment>
+                  ),
+                },
+              }}
+              error={Boolean(
+                touched.confirmPassword && errors.confirmPassword
+              )}
+              helperText={
+                touched.confirmPassword && errors.confirmPassword
+              }
+            />
+
+            <Box className="register__buttons">
+              <Button
+                fullWidth
+                variant="contained"
+                className="register__button"
+                type="submit"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? (
+                  <CircularProgress size={24} color="inherit" />
+                ) : (
+                  "Kayıt Ol"
+                )}
+              </Button>
+
+              <Button
+                fullWidth
+                variant="outlined"
+                className="register__button"
+                type="button"
+                onClick={() => resetForm()}
+                disabled={isSubmitting}
+              >
+                Clear
+              </Button>
+            </Box>
+          </form>
 
           <Typography className="register__footer">
             Already have an account? Login

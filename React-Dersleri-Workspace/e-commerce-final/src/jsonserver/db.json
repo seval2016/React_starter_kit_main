@@ -1,0 +1,18 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "name": "Emre",
+      "email": "emre@emre",
+      "password": "1234",
+      "role": "admin"
+    },
+    {
+      "id": "484c",
+      "userName": "deneme",
+      "email": "demo@destan.com",
+      "password": "Bursa1685*-/",
+      "confirmPassword": "Bursa1685*-/"
+    }
+  ]
+}
