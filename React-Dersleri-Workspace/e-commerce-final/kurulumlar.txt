@@ -11,4 +11,7 @@ yup             : npm i yup
 react-router-dom: npm i react-router-dom
 react tostify   : npm i react-toastify
 
+jsonserver çalıştırma komutu : npx json-server src/jsonserver/db.json --port 5000
+
+
 

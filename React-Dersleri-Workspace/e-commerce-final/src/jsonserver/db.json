@@ -13,6 +13,13 @@
       "email": "demo@destan.com",
       "password": "Bursa1685*-/",
       "confirmPassword": "Bursa1685*-/"
+    },
+    {
+      "id": "e29e",
+      "userName": "deneme",
+      "email": "admin@portfolio.com",
+      "password": "Admin123456",
+      "confirmPassword": "Admin123456"
     }
   ]
 }
